@@ -1,31 +1,16 @@
 {
-  "name": "cs_211125.211119.203140_22",
+  "name": "express",
   "version": "1.0.0",
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "config.js",
-  "dependencies": {
-    "express": "^4.18.1",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "react-scripts": "^5.0.1",
-    "tslint": "^5.12.1",
-    "typescript": "^3.3.3",
-    "web-vitals": "^2.1.4"
-  },
-  "devDependencies": {},
+  "description": "conexion postgresql",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./api/index.js",
-    "dev": "nodemon ./api/index.js"
+    "dev" : "node ./api/components/index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/211125/CS_211125.211119.203140_22.git"
-  },
-  "author": "angel",
+  "author": "Angel",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/211125/CS_211125.211119.203140_22/issues"
-  },
-  "homepage": "https://github.com/211125/CS_211125.211119.203140_22#readme"
+  "dependencies": {
+    "express": "^4.18.1",
+    "postgres": "^3.2.2"
+  }
 }
