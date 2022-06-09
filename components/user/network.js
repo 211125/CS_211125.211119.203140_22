@@ -1,26 +1,9 @@
-const express = require('express');
-const response = require('../../network/response.js');
-const {getConnection} = require('../../model/db.js')
+import { Router } from 'express';
+import { success } from '../../network/response.js';
+import { getData } from '../../model/db.js';
 
 
-const router = express.Router();
-
-router.get('/s',function (req, res) {
-
-    response.succes(req, res ,'', 200);
-})
-
-router.post('/login', function (req, res) {
-
-    let userName = req.query.userName;
-    let pasword = req.query.pasword;
-
-    res.send({
-        token: "",
-        id_user: "1",
-        success: "exito",
-    })
-})
+const router = Router();
 
 router.post('/register', async function (req, res) {
 
@@ -37,8 +20,8 @@ router.post('/register', async function (req, res) {
     };
 
     (await client).query(query_request)
-    .then(r => {response.success(req,res,r,200);})
-    .catch(e => {response.success(req,res,e.detail,200);})
+    .then(r => {success(req,res,r,200);})
+    .catch(e => {success(req,res,e.detail,200);})
 
 })
 router.get('/mostrar', async function (req, res) {
@@ -50,8 +33,8 @@ router.get('/mostrar', async function (req, res) {
     };
 
     (await client).query(query_request)
-    .then(r => {response.success(req,res,r,200);})
-    .catch(e => {response.success(req,res,e.detail,200);})
+    .then(r => {success(req,res,r,200);})
+    .catch(e => {success(req,res,e.detail,200);})
 
 })
 
@@ -66,8 +49,8 @@ router.delete('/eliminar', async function (req, res) {
     };
 
     (await client).query(query_request)
-    .then(r => {response.success(req,res,r,200);})
-    .catch(e => {response.success(req,res,e.detail,200);})
+    .then(r => {success(req,res,r,200);})
+    .catch(e => {success(req,res,e.detail,200);})
 
 })
 
@@ -86,10 +69,11 @@ router.put('/actualizar', async function (req, res) {
     };
 
     (await client).query(query_request)
-    .then(r => {response.success(req,res,r,200);})
-    .catch(e => {response.success(req,res,e.detail,200);})
+    .then(r => {success(req,res,r,200);})
+    .catch(e => {success(req,res,e.detail,200);})
 
 })
+
 router.patch('/name', async function (req, res) {
 
     const client = await getConnection();
@@ -105,8 +89,8 @@ router.patch('/name', async function (req, res) {
     };
 
     (await client).query(query_request)
-        .then(r => {response.success(req,res,r,200);})
-        .catch(e => {response.success(req,res,e.detail,200);})
+        .then(r => {success(req,res,r,200);})
+        .catch(e => {success(req,res,e.detail,200);})
 
 })
 router.patch('/email', async function (req, res) {
@@ -124,8 +108,8 @@ router.patch('/email', async function (req, res) {
     };
 
     (await client).query(query_request)
-        .then(r => {response.success(req,res,r,200);})
-        .catch(e => {response.success(req,res,e.detail,200);})
+        .then(r => {success(req,res,r,200);})
+        .catch(e => {success(req,res,e.detail,200);})
 
 })
 router.patch('/pass', async function (req, res) {
@@ -143,8 +127,8 @@ router.patch('/pass', async function (req, res) {
     };
 
     (await client).query(query_request)
-        .then(r => {response.success(req,res,r,200);})
-        .catch(e => {response.success(req,res,e.detail,200);})
+        .then(r => {success(req,res,r,200);})
+        .catch(e => {success(req,res,e.detail,200);})
 
 })
 router.patch('/phone', async function (req, res) {
@@ -162,10 +146,19 @@ router.patch('/phone', async function (req, res) {
     };
 
     (await client).query(query_request)
-        .then(r => {response.success(req,res,r,200);})
-        .catch(e => {response.success(req,res,e.detail,200);})
+        .then(r => {success(req,res,r,200);})
+        .catch(e => {success(req,res,e.detail,200);})
 
 })
 
+router.get('/all_users_orm', async function (req, res) {
+    getUsers.findAll({ attributes : [' username', 'email', 'password', 'phone_number']})
+    .then(users => {
+        res.send(users)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+});
 
-module.exports = router;
+export default Router;
