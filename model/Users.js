@@ -1,5 +1,5 @@
 import { getData } from './db.js';
-import {Sequelize} from 'Sequelize';
+import { Sequelize } from 'Sequelize';
 
 const User = getData.sequelizeClient.define('tbl_usersdb', {
     id: { type: Sequelize.SMALLINT, primaryKey: true },

@@ -14,27 +14,27 @@ router.post('/register', async function (req, res) {
     let password = req.query.password;
     let phone_number = req.query.phone_number;
 
-    const query_request ={
+    const query_request = {
         text: 'INSERT INTO tbl_usersdb(username, email, password, phone_number) VALUES($1, $2, $3, $4)',
         values: [username, email, password, phone_number]
     };
 
     (await client).query(query_request)
-    .then(r => {success(req,res,r,200);})
-    .catch(e => {success(req,res,e.detail,200);})
+        .then(r => { success(req, res, r, 200); })
+        .catch(e => { success(req, res, e.detail, 200); })
 
 })
 router.get('/mostrar', async function (req, res) {
 
     const client = await getConnection();
 
-    const query_request ={
+    const query_request = {
         text: 'SELECT * FROM public.tbl_usersdb'
     };
 
     (await client).query(query_request)
-    .then(r => {success(req,res,r,200);})
-    .catch(e => {success(req,res,e.detail,200);})
+        .then(r => { success(req, res, r, 200); })
+        .catch(e => { success(req, res, e.detail, 200); })
 
 })
 
@@ -44,13 +44,13 @@ router.delete('/eliminar', async function (req, res) {
 
     let id = req.query.id;
 
-    const query_request ={
+    const query_request = {
         text: `DELETE FROM tbl_usersdb WHERE id=${id}`
     };
 
     (await client).query(query_request)
-    .then(r => {success(req,res,r,200);})
-    .catch(e => {success(req,res,e.detail,200);})
+        .then(r => { success(req, res, r, 200); })
+        .catch(e => { success(req, res, e.detail, 200); })
 
 })
 
@@ -64,13 +64,13 @@ router.put('/actualizar', async function (req, res) {
     let password = req.query.password;
     let phone_number = req.query.phone_number;
 
-    const query_request ={
+    const query_request = {
         text: `UPDATE tbl_usersdb SET username = '${username}', email = '${email}' , password = '${password}' , phone_number = '${phone_number}' where id = '${id}'`
     };
 
     (await client).query(query_request)
-    .then(r => {success(req,res,r,200);})
-    .catch(e => {success(req,res,e.detail,200);})
+        .then(r => { success(req, res, r, 200); })
+        .catch(e => { success(req, res, e.detail, 200); })
 
 })
 
@@ -84,13 +84,13 @@ router.patch('/name', async function (req, res) {
     let password = req.query.password;
     let phone_number = req.query.phone_number;
 
-    const query_request ={
+    const query_request = {
         text: `UPDATE tbl_usersdb SET username = '${username}' where id = '${id}'`
     };
 
     (await client).query(query_request)
-        .then(r => {success(req,res,r,200);})
-        .catch(e => {success(req,res,e.detail,200);})
+        .then(r => { success(req, res, r, 200); })
+        .catch(e => { success(req, res, e.detail, 200); })
 
 })
 router.patch('/email', async function (req, res) {
@@ -103,13 +103,13 @@ router.patch('/email', async function (req, res) {
     let password = req.query.password;
     let phone_number = req.query.phone_number;
 
-    const query_request ={
+    const query_request = {
         text: `UPDATE tbl_usersdb SET email = '${email}'  where id = '${id}'`
     };
 
     (await client).query(query_request)
-        .then(r => {success(req,res,r,200);})
-        .catch(e => {success(req,res,e.detail,200);})
+        .then(r => { success(req, res, r, 200); })
+        .catch(e => { success(req, res, e.detail, 200); })
 
 })
 router.patch('/pass', async function (req, res) {
@@ -122,13 +122,13 @@ router.patch('/pass', async function (req, res) {
     let password = req.query.password;
     let phone_number = req.query.phone_number;
 
-    const query_request ={
+    const query_request = {
         text: `UPDATE tbl_usersdb SET password = '${password}'  where id = '${id}'`
     };
 
     (await client).query(query_request)
-        .then(r => {success(req,res,r,200);})
-        .catch(e => {success(req,res,e.detail,200);})
+        .then(r => { success(req, res, r, 200); })
+        .catch(e => { success(req, res, e.detail, 200); })
 
 })
 router.patch('/phone', async function (req, res) {
@@ -141,24 +141,24 @@ router.patch('/phone', async function (req, res) {
     let password = req.query.password;
     let phone_number = req.query.phone_number;
 
-    const query_request ={
+    const query_request = {
         text: `UPDATE tbl_usersdb SET  phone_number = '${phone_number}' where id = '${id}'`
     };
 
     (await client).query(query_request)
-        .then(r => {success(req,res,r,200);})
-        .catch(e => {success(req,res,e.detail,200);})
+        .then(r => { success(req, res, r, 200); })
+        .catch(e => { success(req, res, e.detail, 200); })
 
 })
 
 router.get('/all_users_orm', async function (req, res) {
-    getUsers.findAll({ attributes : [' username', 'email', 'password', 'phone_number']})
-    .then(users => {
-        res.send(users)
-    })
-    .catch(err => {
-        console.log(err)
-    })
+    getUsers.findAll({ attributes: [' username', 'email', 'password', 'phone_number'] })
+        .then(users => {
+            res.send(users)
+        })
+        .catch(err => {
+            console.log(err)
+        })
 });
 
 export default Router;
