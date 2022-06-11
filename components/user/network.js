@@ -1,164 +1,55 @@
 import { Router } from 'express';
 import { success } from '../../network/response.js';
-import { getData } from '../../model/db.js';
-
+import { getUsers } from '../../model/Users.js';
 
 const router = Router();
 
-router.post('/register', async function (req, res) {
-
-    const client = await getConnection();
-
-    let username = req.query.username;
-    let email = req.query.email;
-    let password = req.query.password;
-    let phone_number = req.query.phone_number;
-
-    const query_request = {
-        text: 'INSERT INTO tbl_usersdb(username, email, password, phone_number) VALUES($1, $2, $3, $4)',
-        values: [username, email, password, phone_number]
-    };
-
-    (await client).query(query_request)
-        .then(r => { success(req, res, r, 200); })
-        .catch(e => { success(req, res, e.detail, 200); })
-
-})
-router.get('/mostrar', async function (req, res) {
-
+router.get('/success1', async function (req, res) {
     const client = await getConnection();
 
     const query_request = {
-        text: 'SELECT * FROM public.tbl_usersdb'
-    };
-
-    (await client).query(query_request)
+        text: 'SELECT * FROM tbl_usersdb',
+    }
+    client.query(query_request)
         .then(r => { success(req, res, r, 200); })
-        .catch(e => { success(req, res, e.detail, 200); })
+        .catch(e => { success(req, res, e.stack, 400); })
+});
+router.post('/registroUser', async function (req, res) {
+    getUser.create({
+        id: req.query.id,
+        username: req.query.username,
+        email: req.query.email,
+        password: req.query.password,
+        phone_number: req.query.phone_number
+
+    }).then(users => {
+        res.send(users)
+    })
 
 })
-
-router.delete('/eliminar', async function (req, res) {
-
-    const client = await getConnection();
-
-    let id = req.query.id;
-
-    const query_request = {
-        text: `DELETE FROM tbl_usersdb WHERE id=${id}`
-    };
-
-    (await client).query(query_request)
-        .then(r => { success(req, res, r, 200); })
-        .catch(e => { success(req, res, e.detail, 200); })
-
-})
-
 router.put('/actualizar', async function (req, res) {
-
-    const client = await getConnection();
-
-    let id = req.query.id;
-    let username = req.query.username;
-    let email = req.query.email;
-    let password = req.query.password;
-    let phone_number = req.query.phone_number;
-
-    const query_request = {
-        text: `UPDATE tbl_usersdb SET username = '${username}', email = '${email}' , password = '${password}' , phone_number = '${phone_number}' where id = '${id}'`
-    };
-
-    (await client).query(query_request)
-        .then(r => { success(req, res, r, 200); })
-        .catch(e => { success(req, res, e.detail, 200); })
-
-})
-
-router.patch('/name', async function (req, res) {
-
-    const client = await getConnection();
-
-    let id = req.query.id;
-    let username = req.query.username;
-    let email = req.query.email;
-    let password = req.query.password;
-    let phone_number = req.query.phone_number;
-
-    const query_request = {
-        text: `UPDATE tbl_usersdb SET username = '${username}' where id = '${id}'`
-    };
-
-    (await client).query(query_request)
-        .then(r => { success(req, res, r, 200); })
-        .catch(e => { success(req, res, e.detail, 200); })
-
-})
-router.patch('/email', async function (req, res) {
-
-    const client = await getConnection();
-
-    let id = req.query.id;
-    let username = req.query.username;
-    let email = req.query.email;
-    let password = req.query.password;
-    let phone_number = req.query.phone_number;
-
-    const query_request = {
-        text: `UPDATE tbl_usersdb SET email = '${email}'  where id = '${id}'`
-    };
-
-    (await client).query(query_request)
-        .then(r => { success(req, res, r, 200); })
-        .catch(e => { success(req, res, e.detail, 200); })
-
-})
-router.patch('/pass', async function (req, res) {
-
-    const client = await getConnection();
-
-    let id = req.query.id;
-    let username = req.query.username;
-    let email = req.query.email;
-    let password = req.query.password;
-    let phone_number = req.query.phone_number;
-
-    const query_request = {
-        text: `UPDATE tbl_usersdb SET password = '${password}'  where id = '${id}'`
-    };
-
-    (await client).query(query_request)
-        .then(r => { success(req, res, r, 200); })
-        .catch(e => { success(req, res, e.detail, 200); })
-
-})
-router.patch('/phone', async function (req, res) {
-
-    const client = await getConnection();
-
-    let id = req.query.id;
-    let username = req.query.username;
-    let email = req.query.email;
-    let password = req.query.password;
-    let phone_number = req.query.phone_number;
-
-    const query_request = {
-        text: `UPDATE tbl_usersdb SET  phone_number = '${phone_number}' where id = '${id}'`
-    };
-
-    (await client).query(query_request)
-        .then(r => { success(req, res, r, 200); })
-        .catch(e => { success(req, res, e.detail, 200); })
-
-})
-
-router.get('/all_users_orm', async function (req, res) {
-    getUsers.findAll({ attributes: [' username', 'email', 'password', 'phone_number'] })
+    let id = red.query.id
+    let nuevoDato = req.query
+    getUsers.findOne({ where: { id: id } })
         .then(users => {
-            res.send(users)
-        })
-        .catch(err => {
-            console.log(err)
+            users.update(nuevoDato)
         })
 });
+router.delete('/eli', async function (req, res) {
+    let id = req.query.id;
+    console.log("id:" + req.query.id);
+    getUsers.destroy({
+        where: {
+            id: id
+        }
+    })
+        .then((r) => {
+            success(req, res, r, 200);
+        })
+        .catch((e) => {
+            success(req, res, e, 200)
+        });
+});
+
 
 export default Router;
